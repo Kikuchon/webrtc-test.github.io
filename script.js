@@ -106,7 +106,7 @@ $(function(){
           };
         }else{
           let constraints = {
-              audio: false,//{deviceId: {exact: audioSource}},
+              audio: {deviceId: {exact: audioSource}},
               video: {deviceId: {exact: videoSource}}
           };
         }
