@@ -99,8 +99,7 @@ $(function(){
     function setupGetUserMedia() {
         let audioSource = $('#audioSource').val();
         let videoSource = $('#videoSource').val();
-        let ua = window.navigator.userAgent;
-        ua = ua.toLowerCase();
+        let ua = window.navigator.userAgent.toLowerCase();
         if(ua.indexOf("iphone")!==-1||ua.indexOf("ipad")!==-1){
           let constraints = {
               audio: false,//{deviceId: {exact: audioSource}},
