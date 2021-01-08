@@ -100,13 +100,14 @@ $(function(){
         let audioSource = $('#audioSource').val();
         let videoSource = $('#videoSource').val();
         let ua = window.navigator.userAgent.toLowerCase();
+        let constraints = null;
         if(ua.indexOf("iphone")!==-1||ua.indexOf("ipad")!==-1){
-          let constraints = {
+          constraints = {
               audio: false,//{deviceId: {exact: audioSource}},
               video: {facingMode:"environment"}
           };
         }else{
-          let constraints = {
+          constraints = {
               audio: {deviceId: {exact: audioSource}},
               video: {deviceId: {exact: videoSource}}
           };
