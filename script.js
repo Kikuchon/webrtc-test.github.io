@@ -8,28 +8,32 @@ $(function(){
     let audioSelect = $('#audioSource');
     let videoSelect = $('#videoSource');
 
-    navigator.mediaDevices.enumerateDevices()
-        .then(function(deviceInfos) {
-            for (let i = 0; i !== deviceInfos.length; ++i) {
-                let deviceInfo = deviceInfos[i];
-                let option = $('<option>');
-                option.val(deviceInfo.deviceId);
-                if (deviceInfo.kind === 'audioinput') {
-                    option.text(deviceInfo.label);
-                    audioSelect.append(option);
-                } else if (deviceInfo.kind === 'videoinput') {
-                    option.text(deviceInfo.label);
-                    videoSelect.append(option);
-                }
-            }
-            videoSelect.on('change', setupGetUserMedia);
-            audioSelect.on('change', setupGetUserMedia);
-            setupGetUserMedia();
-        }).catch(function (error) {
-            console.error('mediaDevices.enumerateDevices() error:', error);
-            return;
-        });
-
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.indexOf("iphone")!==-1||ua.indexOf("ipad")!==-1){
+      setupGetUserMedia();
+    }else{
+      navigator.mediaDevices.enumerateDevices()
+          .then(function(deviceInfos) {
+              for (let i = 0; i !== deviceInfos.length; ++i) {
+                  let deviceInfo = deviceInfos[i];
+                  let option = $('<option>');
+                  option.val(deviceInfo.deviceId);
+                  if (deviceInfo.kind === 'audioinput') {
+                      option.text(deviceInfo.label);
+                      audioSelect.append(option);
+                  } else if (deviceInfo.kind === 'videoinput') {
+                      option.text(deviceInfo.label);
+                      videoSelect.append(option);
+                  }
+              }
+              videoSelect.on('change', setupGetUserMedia);
+              audioSelect.on('change', setupGetUserMedia);
+              setupGetUserMedia();
+          }).catch(function (error) {
+              console.error('mediaDevices.enumerateDevices() error:', error);
+              return;
+          });
+    }
 
     peer = new Peer({
         key: '335992b9-db76-4702-ab40-dd0343dca774',
@@ -95,10 +99,17 @@ $(function(){
     function setupGetUserMedia() {
         let audioSource = $('#audioSource').val();
         let videoSource = $('#videoSource').val();
-        let constraints = {
-            audio: {deviceId: {exact: audioSource}},
-            video: {deviceId: {exact: videoSource}}
-        };
+        if(ua.indexOf("iphone")!==-1||ua.indexOf("ipad")!==-1){
+          let constraints = {
+              audio: false,//{deviceId: {exact: audioSource}},
+              video: {facingMode:"environment"}
+          };
+        }else{
+          let constraints = {
+              audio: false,//{deviceId: {exact: audioSource}},
+              video: {deviceId: {exact: videoSource}}
+          };
+        }
         constraints.video.width = {
             min: 320,
             max: 320
