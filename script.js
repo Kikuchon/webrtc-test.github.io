@@ -113,11 +113,13 @@ $(function(){
           };
         }
         constraints.video.width = {
-            min: 320,
+            min: 640,
+            ideal: 640,
             //max: 320
         };
         constraints.video.height = {
-            min: 240,
+            min: 480,
+            ideal: 480,
             //max: 240
         };
 
