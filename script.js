@@ -114,12 +114,12 @@ $(function(){
         }
         constraints.video.width = {
             min: 640,
-            ideal: 640,
+            //ideal: 640,
             //max: 320
         };
         constraints.video.height = {
             min: 480,
-            ideal: 480,
+            //ideal: 480,
             //max: 240
         };
 
